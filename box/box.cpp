@@ -1,7 +1,12 @@
-//#include "pch.h"
 #include <iostream>
 
-class Box {
+class Body
+{
+public:
+	virtual int area() = 0;
+};
+
+class Box: Body {
 	int height{0};
 	int length{0};
 	int width{0};
