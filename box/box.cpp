@@ -21,15 +21,14 @@ public:
 	void setW(int w) { width = w; }
 	int area();
 	
-	~Box() { std::cout << "beep! - it's a Box destructor\n"; }
+	~Box() { std::cout << "beep! another Box destructed\n"; }
 	
 	Box& operator= (const Box &inBox);
 
-	Box operator++(int);
-	Box operator--(int);
-
-	Box& operator++();
-	Box& operator--(); 
+	const Box operator++(int);
+	const Box operator--(int);
+	const Box operator++();
+	const Box operator--();
 };
 
 Box& Box::operator= (const Box &inBox) {
@@ -39,32 +38,36 @@ Box& Box::operator= (const Box &inBox) {
 	return *this;
 }
 
-Box Box::operator++(int) {
-	height++;
-	length++;
-	width++;
-	return *this;
-}
-
-Box Box::operator--(int) {
-	height--;
-	length--;
-	width--;
-	return *this;
-}
-
-Box& Box::operator++() {
+const Box Box::operator++(int) {
+	Box temp(height, length, width);
 	++height;
 	++length;
 	++width;
-	return *this;
+	return temp;
 }
 
-Box& Box::operator--() {
+const Box Box::operator--(int) {
+	Box temp(height, length, width);
 	--height;
 	--length;
 	--width;
-	return *this;
+	return temp;
+}
+
+const Box Box::operator++() {
+	++height;
+	++length;
+	++width;
+	Box temp(height, length, width);
+	return temp;
+}
+
+const Box Box::operator--() {
+	--height;
+	--length;
+	--width;
+	Box temp(height, length, width);
+	return temp;
 }
 
 int Box::area() {
@@ -72,14 +75,11 @@ int Box::area() {
 }
 
 
-int main()
-{
+int main() {
 	Box box(1, 1, 1);
-	box++;
+	Box box0 = box++;
 	Box box2 = box;
-	Box box3;
-	box3 = box2;
-
+	
 	//box2.setW(4);
-	std::cout << box3.area() <<"\n";
+	std::cout << box2.area() <<"\n";
 }
