@@ -1,7 +1,6 @@
 #include <iostream>
 
-class Body
-{
+class Body {
 public:
 	virtual int area() = 0;
 };
@@ -35,6 +34,13 @@ public:
 	const Box operator--(int);
 	const Box operator++();
 	const Box operator--();
+};
+
+class WBox: Box {
+
+	WBox(Box b) : height(h), length(0), width(0) {}
+	
+	int area();
 };
 
 Box& Box::operator= (const Box& inBox) {
@@ -85,6 +91,10 @@ const Box Box::operator--() {
 }
 
 int Box::area() {
+	return 2 * ( 2 * height * ( length + width ) + length * width);
+}
+
+int WBox::area() {
 	return height * length * width * 5 * 2;
 }
 
@@ -94,6 +104,8 @@ int main() {
 	Box box0 = box++;
 	Box box2 = box;
 	Box box3 = box0 + box2;
+	WBox wbox(box3,2,3);
 	//box2.setW(4);
 	std::cout << box3.area() <<"\n";
+	std::cout << wbox.area() <<"\n";
 }
