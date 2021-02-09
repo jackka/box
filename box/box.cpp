@@ -23,7 +23,8 @@ public:
 	
 	~Box() { std::cout << "beep! another Box destructed\n"; }
 	
-	Box& operator= (const Box &inBox);
+	Box& operator= (const Box& inBox);
+	friend Box operator+ (const Box& lBox, const Box& rBox );
 
 	const Box operator++(int);
 	const Box operator--(int);
@@ -31,11 +32,19 @@ public:
 	const Box operator--();
 };
 
-Box& Box::operator= (const Box &inBox) {
+Box& Box::operator= (const Box& inBox) {
 	height = inBox.height;
 	length = inBox.length;
 	width = inBox.width;
 	return *this;
+}
+
+Box operator+ (const Box &lBox, const Box &rBox) {
+	Box res{ lBox };
+	res.height += rBox.height;
+	res.length += rBox.length;
+	res.width += rBox.width;
+	return res;
 }
 
 const Box Box::operator++(int) {
@@ -79,7 +88,7 @@ int main() {
 	Box box(1, 1, 1);
 	Box box0 = box++;
 	Box box2 = box;
-	
+	Box box3 = box0 + box2;
 	//box2.setW(4);
-	std::cout << box2.area() <<"\n";
+	std::cout << box3.area() <<"\n";
 }
