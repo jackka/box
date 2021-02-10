@@ -5,15 +5,15 @@ public:
 	virtual int area() = 0;
 };
 
-class Box: Body {
+class Box : Body {
 	int height{0};
 	int length{0};
 	int width{0};
 public:
 	Box() {};
 	Box(int h) :				height(h), length(0), width(0) {}
-	Box(int h, int l):			height(h), length(l), width(0) {}
-	Box(int h, int l, int w):	height(h), length(l), width(w) {}
+	Box(int h, int l) :			height(h), length(l), width(0) {}
+	Box(int h, int l, int w) :	height(h), length(l), width(w) {}
 
 	Box(const Box &obj): height(obj.height), length(obj.length), width(obj.width) {}
 
@@ -36,9 +36,12 @@ public:
 	const Box operator--();
 };
 
-class WBox: Box {
-
-	WBox(Box b) : height(h), length(0), width(0) {}
+class WBox : Box {
+	Box& p_box;
+	int w_height{0};
+	int w_width{0};
+public:
+	WBox(Box& b, int w_h, int w_w) : p_box(b), w_height(w_h), w_width(w_w) {}
 	
 	int area();
 };
@@ -95,7 +98,7 @@ int Box::area() {
 }
 
 int WBox::area() {
-	return height * length * width * 5 * 2;
+	return p_box.area() - ( w_height * w_width ) * 2;
 }
 
 
