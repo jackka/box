@@ -6,9 +6,9 @@ public:
 };
 
 class Box : Body {
-	int height{0};
-	int length{0};
-	int width{0};
+	int height{ 0 };
+	int length{ 0 };
+	int width{ 0 };
 public:
 	Box() {};
 	Box(int h) :				height(h), length(0), width(0) {}
@@ -38,11 +38,23 @@ public:
 
 class WBox : Box {
 	Box *p_box;
-	int w_height{0};
-	int w_width{0};
+	int w_height{ 0 };
+	int w_width{ 0 };
 public:
 	WBox( Box *b, int w_h, int w_w) : p_box(b), w_height(w_h), w_width(w_w) {}
-	
+	int area();
+};
+
+class HBox : Box {
+	Box *p_box;
+	int height{ 0 };
+	int length{ 0 };
+	int width{ 0 };
+public:
+	HBox(Box *b, int self_h) : p_box(b), height(self_h)  {
+		length = b->getL();
+		width = b->getL();
+	}
 	int area();
 };
 
@@ -93,22 +105,30 @@ const Box Box::operator--() {
 	return temp;
 }
 
-int Box::area() {
-	return 2 * ( 2 * height * ( length + width ) + length * width);
+int Box::area() {// две * 			(высоты				*	(ширина + длина))	+		  дно
+	return 2 *	(	2	*			height				*	 (length + width)	+	length * width		);  // выпук. ч. = вогнутой. ч. пов. (стенка 0 толщины) => умножаем на 2.
 }
 
 int WBox::area() {
-	return p_box->area() - ( w_height * w_width ) * 2;
+	return p_box->area() - ( w_height * w_width ) * 2; // площадь за минусом окна, что скрадывает от поверхности две своих стороны 
+}
+
+int HBox::area() { 
+	return		(	2	*	(p_box->getH() + height)	*	(length + width)	+ length * width)   +   // выпук. ч. обоих коробок без внутреней замкнутой поверхности.
+				(	2	*			height				*	(length + width)	+ length + width);		// вог. ч. верхней коробки
 }
 
 
 int main() {
-	Box box(1, 1, 1);
-	Box box0 = box++;
-	Box box2 = box;
-	Box box3 = box0 + box2;
-	WBox wbox(&box3,2,3);
-	//box2.setW(4);
+	Box box(1, 1, 1); // тестим создание оъекта
+	Box box0 = box++; // тестим переопределение оператора ++ 
+	Box box2 = box;   // с отложенным инкрентом
+	Box box3 = box0 + box2; // перегруженный +
+	WBox wbox(&box3,2,3); // объект с окном
+	HBox hbox(&box3,5);	  // объект коробок с различной высотой
+	
+	// расчёт площадей
 	std::cout << box3.area() <<"\n";
 	std::cout << wbox.area() <<"\n";
+	std::cout << hbox.area() <<"\n"; 
 }
