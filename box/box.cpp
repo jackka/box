@@ -37,11 +37,11 @@ public:
 };
 
 class WBox : Box {
-	Box& p_box;
+	Box *p_box;
 	int w_height{0};
 	int w_width{0};
 public:
-	WBox(Box& b, int w_h, int w_w) : p_box(b), w_height(w_h), w_width(w_w) {}
+	WBox( Box *b, int w_h, int w_w) : p_box(b), w_height(w_h), w_width(w_w) {}
 	
 	int area();
 };
@@ -98,7 +98,7 @@ int Box::area() {
 }
 
 int WBox::area() {
-	return p_box.area() - ( w_height * w_width ) * 2;
+	return p_box->area() - ( w_height * w_width ) * 2;
 }
 
 
@@ -107,7 +107,7 @@ int main() {
 	Box box0 = box++;
 	Box box2 = box;
 	Box box3 = box0 + box2;
-	WBox wbox(box3,2,3);
+	WBox wbox(&box3,2,3);
 	//box2.setW(4);
 	std::cout << box3.area() <<"\n";
 	std::cout << wbox.area() <<"\n";
