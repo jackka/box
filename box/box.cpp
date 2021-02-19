@@ -86,7 +86,7 @@ public:
 
 	Stack() {
 		top = 0;
-		st = new T[100];
+		st = new T[3];
 	}
 
 	~Stack() {
@@ -95,13 +95,13 @@ public:
 	}
 
 	void push(T val) {
-		if (top == 2) throw "full";	
+		if (top == 1) throw "---- stack full";	
 		st[top] = val;
 		top++;
 	};
 
 	int pop() {
-		if (top == 0) throw "empty";
+		if (top == 0) throw "---- stack empty";
 		top--;
 		return st[top];
 	};
@@ -174,7 +174,7 @@ int HBox::area() const {
 
 //==========   Main
 int main() {
-	int b_height = -1, b_length = b_height, b_width = b_height, // коробка 1, 1, 1
+	int b_height = 1, b_length = b_height, b_width = b_height, // коробка 1, 1, 1
 		w_height = 3,	// для окна
 		w_width  = 5,	// для окна
 		s_height = 7;	// для 2-ой коробки
@@ -211,13 +211,15 @@ int main() {
 	
 	try {
 		ist.push(1);
-		ist.push(1);
+	//	ist.push(1);
 		
-		int a = ist.pop();
+		ist.pop();
+		ist.pop();
 	
 	}
 	catch (const char* e){
 		std::cout << e;
+		exit(-1);
 	}
 	
 
