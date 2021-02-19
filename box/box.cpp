@@ -86,12 +86,12 @@ public:
 
 	Stack() {
 		top = 0;
-		st = new T[2];
+		st = new T[100];
 	}
 
 	~Stack() {
 		delete[] st;
-		cout << "~Stack\n" << endl;
+		std::cout << "~Stack\n";
 	}
 
 	void push(T val) {
@@ -100,10 +100,10 @@ public:
 		top++;
 	};
 
-	void pop(T val) {
+	int pop() {
 		if (top == 0) throw "empty";
-		st[top] = val;
 		top--;
+		return st[top];
 	};
 };
 
@@ -174,7 +174,7 @@ int HBox::area() const {
 
 //==========   Main
 int main() {
-	int b_height = 1, b_length = b_height, b_width = b_height, // коробка 1, 1, 1
+	int b_height = -1, b_length = b_height, b_width = b_height, // коробка 1, 1, 1
 		w_height = 3,	// для окна
 		w_width  = 5,	// для окна
 		s_height = 7;	// для 2-ой коробки
@@ -204,21 +204,25 @@ int main() {
 	std::cout << " wbox.area:\t"	<< wbox.area()	<<	"\n";
 	std::cout << " hbox.area:\t"	<< hbox.area()	<<	"\n";
 	std::cout << " whbox.area:\t"	<< whbox.area()	<<	"\n";
-
+	
 	Stack <int>		ist;
 	Stack <double>	dst;
 
-	ist.push(1);
+	
 	try {
 		ist.push(1);
+		ist.push(1);
+		
+		int a = ist.pop();
+	
 	}
 	catch (const char* e){
 		std::cout << e;
 	}
 	
-	ist.pop(2);
+
 	
 	dst.push(0.1);
-
+	
 
 }
